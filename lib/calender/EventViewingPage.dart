@@ -113,7 +113,7 @@ class EventViewingPage extends StatelessWidget {
         onPressed: () async {
           final provider = Provider.of<EventProvider>(context, listen: false);
           provider.deleteEvent(event);
-          await FocusAppDatabase.instance.delete(event.id!);
+          await FocusAppDatabase.instance.deleteE(event.id!);
           Navigator.of(context).pop();
   }
         ),

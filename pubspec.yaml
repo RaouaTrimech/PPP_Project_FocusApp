@@ -70,6 +70,12 @@ flutter:
    - assets/Screen2/Oval1.png
    - assets/Screen2/Oval2.png
    - assets/Accueil/
+   - assets/Articles/
+   - assets/images/plus.png
+   - assets/images/notes.png
+   - assets/images/Screen13.png
+   - assets/images/book-1.png
+   - assets/images/book-2.png
    - assets/Games_Assets/MemoGame_Assets/
    - assets/Games_Assets/TicTacToeGame_Assets/
    - assets/Games_Assets/SudokuGame_Assets/

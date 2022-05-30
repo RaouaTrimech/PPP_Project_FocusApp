@@ -36,14 +36,14 @@ class _EventProvider1State extends State<EventProvider1> implements ChangeNotifi
 
   Future<void> addEvent(Event event) async {
     _events.add(event);
-    await FocusAppDatabase.instance.create(event);
+    await FocusAppDatabase.instance.createE(event);
     notifyListeners();
   }
 
   Future<void> editEvent(Event newEvent , Event oldEvent) async {
     final index = _events.indexOf(oldEvent);
     _events[index] = newEvent;
-    await FocusAppDatabase.instance.update(newEvent);
+    await FocusAppDatabase.instance.updateE(newEvent);
 
     notifyListeners();
   }

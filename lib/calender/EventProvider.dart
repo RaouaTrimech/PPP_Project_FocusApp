@@ -34,7 +34,7 @@ class EventProvider extends ChangeNotifier {
 
   Future<void> addEvent(Event event) async {
 
-     Event event1= await FocusAppDatabase.instance.create(event);
+     Event event1= await FocusAppDatabase.instance.createE(event);
      this._events = await FocusAppDatabase.instance.readAllEvents();
     notifyListeners();
 
@@ -43,7 +43,7 @@ class EventProvider extends ChangeNotifier {
   Future<void> editEvent(Event newEvent , Event oldEvent) async {
     final index = _events.indexOf(oldEvent);
 
-    await FocusAppDatabase.instance.update(newEvent);
+    await FocusAppDatabase.instance.updateE(newEvent);
 
     notifyListeners();
   }

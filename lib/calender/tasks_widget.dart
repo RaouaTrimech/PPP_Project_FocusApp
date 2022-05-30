@@ -21,14 +21,19 @@ class _TasksWidgetState extends State<TasksWidget> {
     final selectedEvents = provider.eventsOfSelectedDate;
 
     if(selectedEvents.isEmpty){
-      return Center(
-        child: Text(
-          'No Events Found',
-          style: TextStyle(
-            color: Color.fromRGBO(244, 71, 113, 1),
-            fontSize: 24,
+      return Container(
+          color: Colors.grey[900],
+          child: Center(
+
+          child: Text(
+            'No Events Found',
+            style: TextStyle(
+              color: Color.fromRGBO(244, 71, 113, 1),
+              fontSize: 24,
+            ),
           ),
-        ),
+        )
+
       );
     }
 

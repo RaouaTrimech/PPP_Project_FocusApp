@@ -4,13 +4,20 @@ import 'package:example/Notes/NotesPage.dart';
 import 'package:example/Onboarding.dart';
 import 'package:example/calender/EventProvider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import 'calender/calender_screen.dart';
 
 
 void main() {
-  runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown])
+      .then((_){
+    runApp(MyApp());
+  }
+  );
 }
 
 class MyApp extends StatelessWidget {

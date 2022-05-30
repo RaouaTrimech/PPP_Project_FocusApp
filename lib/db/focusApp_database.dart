@@ -1,3 +1,4 @@
+import 'package:example/Notes/Note.dart';
 import 'package:example/calender/Event.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
@@ -13,7 +14,7 @@ class FocusAppDatabase{
 
     if(_database != null) return _database!;
 
-    _database = await _initDB('focusAppDB.db');
+    _database = await _initDB('focusDB.db');
 
     return _database!;
 
@@ -32,7 +33,7 @@ class FocusAppDatabase{
     final boolType = ' BOOLEAN NOT NULL';
     final textType = ' TEXT NOT NULL' ;
 
-
+    //Event DataTable
     await db.execute('''
     CREATE TABLE $tableEvents (
     ${EventFields.id} $idType,
@@ -43,9 +44,17 @@ class FocusAppDatabase{
     ${EventFields.isAllDay}$boolType
     )
     ''');
+    //Note DataTable
+    await db.execute('''
+    CREATE TABLE $tableNotes (
+    ${NoteFields.id} $idType,
+    ${NoteFields.title}$textType,
+    ${NoteFields.description}$textType
+    )
+    ''');
   }
 
-  Future<Event> create(Event event) async {
+  Future<Event> createE(Event event) async {
     final db = await instance.database ;
 
     final id =  await db.insert(tableEvents, event.toJson());
@@ -54,7 +63,7 @@ class FocusAppDatabase{
 
   }
 
-  Future<int> update(Event event) async {
+  Future<int> updateE(Event event) async {
     final db = await instance.database;
 
     return db.update(
@@ -65,7 +74,7 @@ class FocusAppDatabase{
     );
   }
 
-  Future<int> delete(int id) async {
+  Future<int> deleteE(int id) async {
     final db = await instance.database;
 
     return await db.delete(
@@ -107,4 +116,60 @@ class FocusAppDatabase{
     db.close();
   }
 
+  //Gestion NoteDB
+  Future<Note> createA(Note note) async {
+    final db = await instance.database ;
+
+    final id =  await db.insert(tableNotes, note.toJson());
+
+    return note.copy(id: id);
+
+  }
+
+  Future<int> updateA(Note note) async {
+    final db = await instance.database;
+
+    return db.update(
+      tableNotes,
+      note.toJson(),
+      where: '${EventFields.id} = ? ',
+      whereArgs: [note.id],
+    );
+  }
+
+  Future<int> deleteA(int id) async {
+    final db = await instance.database;
+
+    return await db.delete(
+      tableNotes,
+      where: '${NoteFields.id} = ? ',
+      whereArgs: [id],
+    ) ;
+  }
+
+  Future<Note> readNote(int id) async {
+    final db = await instance.database ;
+
+    final maps = await db.query(
+      tableNotes,
+      columns:  NoteFields.values,
+      where: '${NoteFields.id} = ? ',
+      whereArgs: [id],
+    );
+
+    if(maps.isNotEmpty) {
+      return Note.fromJson(maps.first);
+    }else{
+      throw Exception('ID $id not found');
+    }
+  }
+
+  Future<List<Note>> readAllNotes() async {
+    final db = await instance.database ;
+
+    final orderBy = '${NoteFields.id} ASC';
+    final result = await db.query(tableNotes , orderBy: orderBy);
+
+    return result.map((json) => Note.fromJson(json)).toList();
+  }
 }
