@@ -28,6 +28,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) => ChangeNotifierProvider(
       create: (context) => EventProvider(),
       child:  MaterialApp(
+        debugShowCheckedModeBanner: false,
     title: 'Focus App',
     themeMode: ThemeMode.dark,
     darkTheme: ThemeData.dark().copyWith(

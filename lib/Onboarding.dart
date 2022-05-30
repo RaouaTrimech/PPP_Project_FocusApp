@@ -67,6 +67,7 @@ Widget build(BuildContext context) {
 
   ];
   return new MaterialApp(
+    debugShowCheckedModeBanner: false,
       home: new Scaffold(
           body: LiquidSwipe(
             pages: pages,
